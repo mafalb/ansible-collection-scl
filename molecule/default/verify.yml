@@ -1,0 +1,76 @@
+# vim: set ft=yaml ts=2 expandtab:
+---
+
+- name: verify
+  hosts: all,!infrastructure_group
+
+  environment:
+    http_proxy: http://ci-proxy:3128
+    https_proxy: http://ci-proxy:3128
+
+  roles:
+
+  - role: mafalb.scl.rh
+
+  tasks:
+
+  - name: test plugins
+    assert:
+      that:
+      - "'httpd24'|mafalb.scl.provider == 'rh'"
+      - "'httpd24'|mafalb.scl.name == 'httpd24'"
+      - "'bla-httpd24'|mafalb.scl.provider == 'bla'"
+      - "'rh-httpd24'|mafalb.scl.provider == 'rh'"
+      - "'rh-httpd24'|mafalb.scl.name == 'httpd24'"
+
+  - name: check '-'
+    block:
+
+    - debug:
+        msg: "{{ '-'|mafalb.scl.provider }}"
+      register: _provider1
+      ignore_errors: true
+
+    - debug:
+        msg: "{{ '-'|mafalb.scl.name }}"
+      register: _name1
+      ignore_errors: true
+
+    - name: assert _provider1
+      assert:
+        that:
+        - _provider1.failed
+        - _provider1.msg is search("empty provider")
+
+    - name: assert _name1
+      assert:
+        that:
+        - _name1.failed
+        - _name1.msg is search("empty name")
+
+  - name: check ''
+    block:
+
+    - debug:
+        msg: "{{ ''|mafalb.scl.provider }}"
+      register: _provider2
+      ignore_errors: true
+
+    - name: assert _provider2
+      assert:
+        that:
+        - _provider2.failed
+        - _provider2.msg is search("empty provider")
+
+    - debug:
+        msg: "{{ ''|mafalb.scl.name }}"
+      register: _name2
+      ignore_errors: true
+
+    - name: assert _name2
+      assert:
+        that:
+        - _name2.failed
+        - _name2.msg is search("empty name")
+
+...

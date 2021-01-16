@@ -1,0 +1,11 @@
+default_context:
+  _template: https://github.com/mafalb/cookiecutters-ansible
+  author_email: markus.falb@mafalb.at
+  author_name: Markus Falb
+  collection: mafalb.scl
+  collection_name: scl
+  destdir: scl
+  hosted_by: github
+  license: BSD-3-Clause
+  namespace: mafalb
+  repository_url: https://github.com/mafalb/ansible-collection-scl

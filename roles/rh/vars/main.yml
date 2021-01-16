@@ -1,0 +1,7 @@
+# vim: set ft=yaml ts=2 expandtab:
+---
+
+scl_vendor: "{{ scl_vendor(scl_prefix) }}"
+scl_name: "{{ scl_name(scl_prefix) }}"
+
+...
