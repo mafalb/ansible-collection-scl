@@ -4,7 +4,7 @@
 galaxy_info:
   author: Markus Falb <markus.falb@mafalb.at>
   description: Ansible role mafalb.scl.rh
-  license: GPL-3.0-or-later
+  license: BSD-3-Clause
   min_ansible_version: 2.9
 
   # https://galaxy.ansible.com/api/v1/platforms/
@@ -29,7 +29,8 @@ galaxy_info:
     - buster
 
   galaxy_tags:
-  - rh
+  - scl
+  - yumrepo
 
 dependencies: []
 
