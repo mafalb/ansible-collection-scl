@@ -66,7 +66,7 @@ jobs:
     - name: checkout collection mafalb.scl
       uses: actions/checkout@v2
       with:
-        repository: ansible-collection-ansible
+        repository: mafalb/ansible-collection-ansible
         ref: dev
         path: ansible_collections/mafalb/ansible
 
