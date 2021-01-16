@@ -63,12 +63,17 @@ jobs:
       with:
         path: ansible_collections/mafalb/scl
 
-    - name: checkout collection mafalb.scl
+    - name: checkout collection mafalb.ansible
       uses: actions/checkout@v2
       with:
         repository: mafalb/ansible-collection-ansible
         ref: dev
         path: ansible_collections/mafalb/ansible
+
+    - name: mv ansible
+      run: |
+        mkdir -p ~/.ansible/collections/ansible_collections/mafalb
+        mv ansible_collections/mafalb/ansible ~/.ansible/collections/ansible_collections/mafalb/
 
     - name: install dependencies
       run: ansible-galaxy collection install -r molecule/requirements.yml
