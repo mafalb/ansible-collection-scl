@@ -28,7 +28,7 @@ jobs:
 
         target:
         - centos7
-#        - oraclelinux7
+        - oraclelinux7
 
         ansible_version:
         - '2.9'
@@ -40,9 +40,9 @@ jobs:
           distribution: centos
           version: 7
 
-#        - target: oraclelinux7
-#          distribution: oraclelinux
-#          version: 7-slim
+        - target: oraclelinux7
+          distribution: oraclelinux
+          version: 7
 
     env:
       
@@ -78,5 +78,5 @@ jobs:
       run: |
         source ~/.virtualenvs/molecule/bin/activate
         molecule test
-
+    
 ...

@@ -73,4 +73,8 @@
         - _name2.failed
         - _name2.msg is search("empty name")
 
+  - name: we can install scls
+    package:
+      name: httpd24-httpd
+
 ...
