@@ -72,8 +72,10 @@ jobs:
 
     - name: mv ansible
       run: |
+        ls -R
+        ls -R ../
         mkdir -p ~/.ansible/collections/ansible_collections/mafalb
-        mv ansible_collections/mafalb/ansible ~/.ansible/collections/ansible_collections/mafalb/
+        mv ../ansible ~/.ansible/collections/ansible_collections/mafalb/
 
     - name: install dependencies
       run: ansible-galaxy collection install -r molecule/requirements.yml
