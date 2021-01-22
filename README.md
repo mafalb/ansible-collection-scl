@@ -15,4 +15,4 @@ Ansible collection mafalb.scl
 
 Copyright (c) 2021 Markus Falb <markus.falb@mafalb.at>
 
-BSD-3-Clause
+GPL-3.0-or-later

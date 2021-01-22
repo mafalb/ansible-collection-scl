@@ -1,10 +1,28 @@
 # vim: set ft=yaml ts=2 expandtab:
+
+# This file is part of ansible-collection-scl
+# Copyright (c) 2021 Markus Falb <markus.falb@mafalb.at>
+#
+# ansible-collection-scl is free software: you can redistribute it 
+# and/or modify it under the terms of the GNU General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# ansible-collection-scl is distributed in the hope that it will be
+# useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with ansible-collection-scl.
+# If not, see <https://www.gnu.org/licenses/>.
+
 ---
 
 galaxy_info:
   author: Markus Falb <markus.falb@mafalb.at>
   description: Ansible role mafalb.scl.rh
-  license: BSD-3-Clause
+  license: GPL-3.0-or-later
   min_ansible_version: 2.9
 
   # https://galaxy.ansible.com/api/v1/platforms/
