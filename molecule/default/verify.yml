@@ -44,12 +44,14 @@
   - name: check '-'
     block:
 
-    - debug:
+    - name: debug
+      debug:
         msg: "{{ '-'|mafalb.scl.provider }}"
       register: _provider1
       ignore_errors: true
 
-    - debug:
+    - name: debug
+      debug:
         msg: "{{ '-'|mafalb.scl.name }}"
       register: _name1
       ignore_errors: true
@@ -69,7 +71,8 @@
   - name: check ''
     block:
 
-    - debug:
+    - name: debug
+      debug:
         msg: "{{ ''|mafalb.scl.provider }}"
       register: _provider2
       ignore_errors: true
@@ -80,7 +83,8 @@
         - _provider2.failed
         - _provider2.msg is search("empty provider")
 
-    - debug:
+    - name: debug
+      debug:
         msg: "{{ ''|mafalb.scl.name }}"
       register: _name2
       ignore_errors: true
