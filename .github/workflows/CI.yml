@@ -63,8 +63,6 @@ jobs:
       with:
         path: ansible_collections/mafalb/scl
 
-    - name: install system ansible
-
     # note: this uses ansible-galaxy from preinstalled ansible (2.10)
     #
     - name: install mafalb.ansible
