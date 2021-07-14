@@ -27,28 +27,39 @@ jobs:
       matrix:
 
         target:
+        - fedora34
+        - c8s
         - centos7
-        - oraclelinux7
+        - ol7
+        - ubuntu20
 
         ansible_version:
         - '2.9'
         - '2.10'
+        - '2.11'
 
         include:
 
-        - target: centos7
-          distribution: centos
-          version: 7
+        - target: fedora34
+          image: docker.io/fedora:34
 
-        - target: oraclelinux7
-          distribution: oraclelinux
-          version: 7
+        - target: c8s
+          image: quay.io/centos/centos:stream8
+
+        - target: centos7
+          image: quay.io/centos/centos:7
+
+        - target: ol7
+          image: docker.io/oraclelinux:7
+
+        - target: ubuntu20
+          image: docker.io/ubuntu:focal
 
     env:
       
       ANSIBLE_VERSION: ${{ matrix.ansible_version }}
-      CI_CONTAINER_IMAGE: ${{ matrix.distribution }}
-      CI_CONTAINER_TAG: ${{ matrix.version }}
+      CI_IMAGE: ${{ matrix.image }}
+      CI_HOSTNAME: ci-${{ matrix.target }}
       PY_COLORS: 1
       ANSIBLE_FORCE_COLOR: 1
  
