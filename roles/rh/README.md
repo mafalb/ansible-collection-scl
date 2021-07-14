@@ -18,4 +18,4 @@ This is only supported on RHEL7 and Clones
 
 Copyright (c) 2021 Markus Falb <markus.falb@mafalb.at>
 
-BSD-3-Clause
+GPL-3.0-or-later

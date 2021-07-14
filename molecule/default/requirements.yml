@@ -2,10 +2,6 @@
 ---
 
 collections:
-
-- name: mafalb.ansible
-  version: '>=1.0.0,<2.0.0'
-
 - name: mafalb.squid
 
 ...

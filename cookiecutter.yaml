@@ -6,6 +6,6 @@ default_context:
   collection_name: scl
   destdir: scl
   hosted_by: github
-  license: BSD-3-Clause
+  license: GPL-3.0-or-later
   namespace: mafalb
   repository_url: https://github.com/mafalb/ansible-collection-scl
