@@ -18,34 +18,4 @@
 # If not, see <https://www.gnu.org/licenses/>.
 
 ---
-
-- name: converge scl
-  hosts: all,!infrastructure_group
-
-  environment:
-    http_proxy: http://ci-proxy:3128
-    https_proxy: http://ci-proxy:3128
-
-  tasks:
-
-  - block:
-
-    - name: include mafalb.epel.release
-      ansible.builtin.include_role:
-        name: mafalb.scl.rh
-
-    rescue:
-      
-    - name: it is ok that non EL7 fails
-      ansible.builtin.assert:
-        that:
-        - ansible_distribution_major_version is version('7', '>')
-      when: ansible_os_family == 'RedHat'
-
-    - name: it is ok that non EL fails
-      ansible.builtin.assert:
-        that:
-        - ansible_os_family != 'RedHat'
-      when: ansible_os_family != 'RedHat'
-
 ...

@@ -40,8 +40,8 @@ lint: |
   ansible-test sanity
 
 platforms:
-- name: ${CI_HOSTNAME-ci-rocky8}
-  image: ${CI_IMAGE:-"quay.io/rockylinux/rockylinux:8"}
+- name: ${CI_HOSTNAME-ci-centos7}
+  image: ${CI_IMAGE:-"quay.io/centos/centos:7"}
   command: /lib/systemd/systemd
   network_mode: bridge
   docker_networks:
