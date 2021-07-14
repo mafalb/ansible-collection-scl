@@ -43,6 +43,9 @@
       - "'bla-httpd24'|mafalb.scl.provider == 'bla'"
       - "'rh-httpd24'|mafalb.scl.provider == 'rh'"
       - "'rh-httpd24'|mafalb.scl.name == 'httpd24'"
+    when:
+    - ansible_os_family == 'RedHat'
+    - ansible_distribution_major_version is version('7', '<=')
 
   - name: check '-'
     block:
@@ -71,6 +74,10 @@
         - _name1.failed
         - _name1.msg is search("empty name")
 
+    when:
+    - ansible_os_family == 'RedHat'
+    - ansible_distribution_major_version is version('7', '<=')
+
   - name: check ''
     block:
 
@@ -98,8 +105,15 @@
         - _name2.failed
         - _name2.msg is search("empty name")
 
+    when:
+    - ansible_os_family == 'RedHat'
+    - ansible_distribution_major_version is version('7', '<=')
+
   - name: we can install scls
     package:
       name: httpd24-httpd
+    when:
+    - ansible_os_family == 'RedHat'
+    - ansible_distribution_major_version is version('7', '<=')
 
 ...
