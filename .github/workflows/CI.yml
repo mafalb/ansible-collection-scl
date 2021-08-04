@@ -49,8 +49,6 @@ jobs:
     - name: ansible version
       run: ansible --version
 
-jobs:
-
   CI:
 
     runs-on: ubuntu-20.04
