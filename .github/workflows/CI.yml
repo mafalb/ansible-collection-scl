@@ -16,6 +16,41 @@ on:
 
 jobs:
 
+  ansible-test:
+
+    runs-on: ubuntu-20.04
+    strategy:
+    fail-fast: false
+
+    matrix:
+      python-version:
+      - 2.7
+      - 3.6
+      - 3.7
+      - 3.8
+      - 3.9 
+
+    defaults:
+      run:
+        working-directory: ansible_collections/mafalb/scl
+
+    steps:
+
+    - name: checkout collection mafalb.scl
+      uses: actions/checkout@v2
+      with:
+        path: ansible_collections/mafalb/scl
+
+    - name: setup python
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: ansible version
+      run: ansible --version
+
+jobs:
+
   CI:
 
     runs-on: ubuntu-20.04
