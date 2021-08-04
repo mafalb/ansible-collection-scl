@@ -49,6 +49,9 @@ jobs:
     - name: ansible version
       run: ansible --version
 
+    - name: install dependencies
+      run: pip install ansible voluptuous==0.12.1 rstcheck tox pylint jmespath 
+
     - name: ansible version
       run: ansible-test sanity
 
