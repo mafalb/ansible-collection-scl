@@ -20,15 +20,15 @@ jobs:
 
     runs-on: ubuntu-20.04
     strategy:
-    fail-fast: false
+      fail-fast: false
 
-    matrix:
-      python-version:
-      - 2.7
-      - 3.6
-      - 3.7
-      - 3.8
-      - 3.9 
+      matrix:
+        python-version:
+        - 2.7
+        - 3.6
+        - 3.7
+        - 3.8
+        - 3.9 
 
     defaults:
       run:
