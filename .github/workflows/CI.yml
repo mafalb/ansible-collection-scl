@@ -47,12 +47,12 @@ jobs:
         python-version: ${{ matrix.python-version }}
 
     - name: install dependencies
-      run: pip install ansible voluptuous==0.12.1 rstcheck tox pylint jmespath 
+      run: pip install ansible voluptuous==0.12.1 rstcheck tox pylint jmespath ansible-lint molecule[test]
 
     - name: ansible version
       run: ansible --version
 
-    - name: ansible version
+    - name: ansible-test
       run: ansible-test sanity
 
   CI:
