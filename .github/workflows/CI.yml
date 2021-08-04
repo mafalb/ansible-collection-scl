@@ -58,12 +58,17 @@ jobs:
         python3 --version
         which python3
         whereis python3
-        
+        ls -l /opt/hostedtoolcache/Python/
 
     - name: install molecule
       run: |
         ansible-galaxy collection install mafalb.ansible
         ansible-playbook -e ansible_python_interpreter=python -D ~/.ansible/collections/ansible_collections/mafalb/ansible/playbooks/molecule.yml -t all,debug
+
+    - name: check python version
+      run: |
+        source ~/.virtualenvs/molecule/bin/activate
+        ansible --version | grep "^python.* ${{ matrix.python_version }}"
 
     - name: ansible version
       run: |
