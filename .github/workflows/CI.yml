@@ -33,6 +33,7 @@ jobs:
     env:
       PY_COLORS: 1
       ANSIBLE_FORCE_COLOR: 1
+      ANSIBLE_PYTHON_INTERPRETER: ${{ matrix.python-version }}/bin/python
 
     defaults:
       run:
@@ -66,7 +67,7 @@ jobs:
 
     - name: install molecule
       run: |
-        ansible-playbook -e ansible_python_interpreter=/opt/hostedtoolcache/Python/3.9.6/x64/bin/python3 -D ~/.ansible/collections/ansible_collections/mafalb/ansible/playbooks/molecule.yml -t all,debug
+        ansible-playbook -D ~/.ansible/collections/ansible_collections/mafalb/ansible/playbooks/molecule.yml -t all,debug
 
     - name: check ansible version
       run: |
