@@ -53,7 +53,12 @@ jobs:
     - name: python version
       run: |
         python --version
+        which python
+        whereis python
         python3 --version
+        which python3
+        whereis python3
+        
 
     - name: install molecule
       run: |
