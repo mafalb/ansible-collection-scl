@@ -53,7 +53,7 @@ jobs:
     - name: install molecule
       run: |
         ansible-galaxy collection install mafalb.ansible
-        ansible-playbook -e ansible_python_interpreter=python3 -D ~/.ansible/collections/ansible_collections/mafalb/ansible/playbooks/molecule.yml -t all,debug
+        ansible-playbook -e ansible_python_interpreter=python${{ matrix.python-version }} -D ~/.ansible/collections/ansible_collections/mafalb/ansible/playbooks/molecule.yml -t all,debug
 
     - name: ansible version
       run: |
