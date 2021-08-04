@@ -30,9 +30,9 @@ def filter_scl_vendor(scl_prefix):
         raise AnsibleError('empty provider in scl_prefix')
     try:
         if (scl_prefix.count('-') == 1):
-            if (len(scl_prefix.split('-')[0]) == 0):
+            if (len(scl_prefix.split('-', 1)[0]) == 0):
                 raise AnsibleError('empty provider in scl_prefix')
-            return scl_prefix.split('-')[0]
+            return scl_prefix.split('-', 1)[0]
         elif (scl_prefix.count('-') == 0):
             return 'rh'
         else:
