@@ -49,6 +49,9 @@ jobs:
     - name: ansible version
       run: ansible --version
 
+    - name: ansible version
+      run: ansible-test sanity
+
   CI:
 
     runs-on: ubuntu-20.04
