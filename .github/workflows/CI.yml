@@ -65,15 +65,15 @@ jobs:
         ansible-galaxy collection install mafalb.ansible
         ansible-playbook -e ansible_python_interpreter=$(which python) -D ~/.ansible/collections/ansible_collections/mafalb/ansible/playbooks/molecule.yml -t all,debug
 
-    - name: check python version
-      run: |
-        source ~/.virtualenvs/molecule/bin/activate
-        ansible --version | grep "^python.* ${{ matrix.python_version }}"
-
-    - name: ansible version
+    - name: check ansible version
       run: |
         source ~/.virtualenvs/molecule/bin/activate
         ansible --version
+
+    - name: check python version
+      run: |
+        source ~/.virtualenvs/molecule/bin/activate
+        ansible --version | grep "^python.* ${{ matrix.python-version }}"
 
     - name: ansible-test
       run: |
