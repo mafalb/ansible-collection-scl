@@ -46,14 +46,20 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
 
-    - name: install dependencies
-      run: pip install ansible voluptuous==0.12.1 rstcheck tox pylint jmespath ansible-lint molecule[test]
+    - name: install molecule
+      run: |
+        ansible-galaxy collection install mafalb.ansible
+        ansible-playbook -e ansible_python_interpreter=python3 -D ~/.ansible/collections/ansible_collections/mafalb/ansible/playbooks/molecule.yml -e molecule_ansible_version=$ANSIBLE_VERSION -t all,debug
 
     - name: ansible version
-      run: ansible --version
+      run: |
+        source ~/.virtualenvs/molecule/bin/activate
+        ansible --version
 
     - name: ansible-test
-      run: ansible-test sanity
+      run: |
+        source ~/.virtualenvs/molecule/bin/activate
+        ansible-test sanity
 
   CI:
 
