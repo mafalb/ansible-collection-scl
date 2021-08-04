@@ -60,10 +60,13 @@ jobs:
         whereis python3
         ls -l /opt/hostedtoolcache/Python/
 
-    - name: install molecule
+    - name: install mafalb.ansible
       run: |
         ansible-galaxy collection install mafalb.ansible
-        ansible-playbook -e ansible_python_interpreter=$(which python) -D ~/.ansible/collections/ansible_collections/mafalb/ansible/playbooks/molecule.yml -t all,debug
+
+    - name: install molecule
+      run: |
+        ansible-playbook -e ansible_python_interpreter=$pythonLocation/bin/python -D ~/.ansible/collections/ansible_collections/mafalb/ansible/playbooks/molecule.yml -t all,debug
 
     - name: check ansible version
       run: |
