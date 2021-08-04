@@ -40,17 +40,28 @@ jobs:
 
         include:
 
+        - target: fedora33
+          image: docker.io/fedora:33
+          privileged: true
+
         - target: fedora34
           image: docker.io/fedora:34
+          privileged: true
 
         - target: c8s
           image: quay.io/centos/centos:stream8
 
+        - target: alma8
+          image: quay.io/almalinux/almalinux:8
+
+        - target: rocky8
+          image: quay.io/rockylinux/rockylinux:8
+
         - target: centos7
           image: quay.io/centos/centos:7
 
-        - target: ol7
-          image: docker.io/oraclelinux:7
+        - target: centos8
+          image: quay.io/centos/centos:8
 
         - target: ubuntu20
           image: docker.io/ubuntu:focal
@@ -74,17 +85,10 @@ jobs:
       with:
         path: ansible_collections/mafalb/scl
 
-    # note: this uses ansible-galaxy from preinstalled ansible (2.10)
-    #
-    - name: install mafalb.ansible
-      run: ansible-galaxy collection install mafalb.ansible
-
-    # note: this uses ansible-playbook from system ansible
-    #
     - name: install molecule
       run: |
-        sudo apt install ansible
-        /usr/bin/ansible-playbook -D ~/.ansible/collections/ansible_collections/mafalb/ansible/playbooks/molecule.yml -e molecule_ansible_version=$ANSIBLE_VERSION -t all,debug
+        ansible-galaxy collection install mafalb.ansible
+        ansible-playbook -e ansible_python_interpreter=python3 -D ~/.ansible/collections/ansible_collections/mafalb/ansible/playbooks/molecule.yml -e molecule_ansible_version=$ANSIBLE_VERSION -t all,debug
 
     - name: check ansible version
       run: |
