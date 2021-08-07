@@ -77,7 +77,8 @@ jobs:
         pip install virtualenv
         virtualenv ~/virtualenv
         . ~/virtualenv/bin/activate
-        pip install ansible
+        pip install wheel
+        pip install 'ansible<=2.10'
 
     - name: install ansible for python 3
       if: ${{ matrix.python-version != '2.7' }}
@@ -116,7 +117,7 @@ jobs:
 
     - name: check for forgotten no_log
       run: |
-        ! grep -r "no_log: false" .
+        grep -r "no_log: false" . || false
 
   CI:
 
