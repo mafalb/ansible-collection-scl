@@ -54,10 +54,29 @@ jobs:
         - ansible_version: '2.10'
           python-version: 3.7
 
-        - ansible_version: '2.9'
+        - ansible_version: '2.10'
           python-version: 3.8
 
         - ansible_version: '2.10'
+          python-version: 3.9
+
+
+        - ansible_version: '2.11'
+          python-version: 2.7
+
+        - ansible_version: '2.11'
+          python-version: 3.5
+
+        - ansible_version: '2.11'
+          python-version: 3.6
+
+        - ansible_version: '2.11'
+          python-version: 3.7
+
+        - ansible_version: '2.11'
+          python-version: 3.8
+
+        - ansible_version: '2.11'
           python-version: 3.9
 
     env:
