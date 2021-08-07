@@ -1,3 +1,5 @@
+#!/bin/bash -eu
+
 set -e
 
 echo "Checking for forgotten no_log..."

@@ -26,13 +26,7 @@ dependency:
     requirements-file: molecule/default/requirements.yml
 
 driver:
-
   name: docker
-
-
-lint: |
-  set -e
-  bash tests/lint.sh
 
 platforms:
 - name: ${CI_HOSTNAME-"ci-rocky8"}

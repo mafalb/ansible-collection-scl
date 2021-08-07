@@ -95,27 +95,11 @@ jobs:
         source ~/virtualenv/bin/activate
         ansible --version | grep "^\s*python.* ${{ matrix.python-version }}"
 
-    - name: ansible-test
+    - name: lint
       run: |
         source ~/virtualenv/bin/activate
-        ansible-test sanity --requirements --python ${{ matrix.python-version }}
-
-    - name: ansible-lint
-      run: |
-        source ~/virtualenv/bin/activate
-        pip install ansible-lint
-        ansible-lint -v
-        ansible-lint roles/*/vars/*.yml
-
-    - name: flake8
-      run: |
-        source ~/virtualenv/bin/activate
-        pip install flake8
-        flake8 -v --exclude tests/output
-
-    - name: check for forgotten no_log
-      run: |
-        grep -r "no_log: false" . || false
+        pip install ansible-lint flake8
+        tests/lint.sh
 
   CI:
 
