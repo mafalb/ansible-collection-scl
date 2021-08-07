@@ -75,7 +75,7 @@ jobs:
       run: |
         python -m venv ~/virtualenv
         . ~/virtualenv/bin/activate
-        pip install ansible
+        pip install ansible ansible-lint
 
     - name: check ansible version
       run: |
@@ -91,6 +91,11 @@ jobs:
       run: |
         source ~/virtualenv/bin/activate
         ansible-test sanity --requirements --python ${{ matrix.python-version }}
+        
+    - name: ansible-lint
+      run: |
+        source ~/virtualenv/bin/activate
+        ansible-lint -v
 
   CI:
 
