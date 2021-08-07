@@ -64,11 +64,6 @@ jobs:
         whereis python3
         ls -l /opt/hostedtoolcache/Python/
 
-    - name: install mafalb.ansible
-      if: false
-      run: |
-        ansible-galaxy collection install mafalb.ansible
-
     - name: install shellcheck
       run: sudo apt install shellcheck
 
