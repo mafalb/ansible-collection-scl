@@ -28,7 +28,7 @@ jobs:
         - 3.6
         - 3.7
         - 3.8
-        - 3.9 
+        - 3.9
 
     env:
       PY_COLORS: 1
@@ -101,7 +101,7 @@ jobs:
       run: |
         source ~/virtualenv/bin/activate
         ansible-test sanity --requirements --python ${{ matrix.python-version }}
-        
+
     - name: ansible-lint
       run: |
         source ~/virtualenv/bin/activate
@@ -168,13 +168,13 @@ jobs:
           image: docker.io/ubuntu:focal
 
     env:
-      
+
       ANSIBLE_VERSION: ${{ matrix.ansible_version }}
       CI_IMAGE: ${{ matrix.image }}
       CI_HOSTNAME: ci-${{ matrix.target }}
       PY_COLORS: 1
       ANSIBLE_FORCE_COLOR: 1
- 
+
     defaults:
       run:
         working-directory: ansible_collections/mafalb/scl
@@ -200,5 +200,5 @@ jobs:
       run: |
         source ~/.virtualenvs/molecule/bin/activate
         molecule test
-    
+
 ...
