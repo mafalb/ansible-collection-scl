@@ -20,7 +20,7 @@ then
         if test -n "$1"
         then
         	args+=(--python)
-        	args+=($1)
+        	args+=("$1")
 		shift
         fi
 fi
