@@ -113,7 +113,6 @@ jobs:
       run: |
         source ~/virtualenv/bin/activate
         ansible --version
-        ansible-test --version
         which ansible-test
         ansible --version | grep "^ansible.* ${{ matrix.ansible_version }}"
 
