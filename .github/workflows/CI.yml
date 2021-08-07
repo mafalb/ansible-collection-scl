@@ -99,7 +99,7 @@ jobs:
     - name: lint
       run: |
         source ~/virtualenv/bin/activate
-        . tests/lint.sh requirements
+        . tests/lint.sh requirements ${{ matrix.python-version }}
 
   CI:
 

@@ -2,6 +2,16 @@
 
 set -e
 
+if test "$1" == 'requirements'
+then
+	args=requirements
+fi
+
+if test -n "$2"
+then
+	args="$args --python $2"
+fi
+
 echo "Checking for forgotten no_log..."
 ! grep -r "no_log: false" .
 
@@ -16,10 +26,4 @@ echo "flake8..."
 flake8 -v
 
 echo "ansible-test sanity"
-if test "$1" == 'requirements'
-then
-	ansible-test sanity --requirements
-else
-	ansible-test sanity
-fi
-	
+ansible-test sanity $args
