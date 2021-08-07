@@ -32,8 +32,8 @@ echo "yamllint..."
 yamllint -s .
 
 echo "ansible-lint..."
-ansible-lint -v
-ansible-lint -v roles/*/vars/*.yml
+#ansible-lint -v
+#ansible-lint -v roles/*/vars/*.yml
 
 echo "flake8..."
 flake8 -v
