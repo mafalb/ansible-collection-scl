@@ -112,7 +112,7 @@ jobs:
       run: |
         source ~/virtualenv/bin/activate
         pip install flake8
-        flake8 -v
+        flake8 -v --exclude tests/output
 
     - name: check for forgotten no_log
       run: |
