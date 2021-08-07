@@ -67,7 +67,7 @@ jobs:
 
     - name: install molecule
       run: |
-        ansible-playbook -D ~/.ansible/collections/ansible_collections/mafalb/ansible/playbooks/molecule.yml -t all,debug
+        ansible-playbook -e ansible_python_interpreter=$pythonLocation/bin/python -D ~/.ansible/collections/ansible_collections/mafalb/ansible/playbooks/molecule.yml -t all,debug
 
     - name: check ansible version
       run: |
