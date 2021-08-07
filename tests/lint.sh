@@ -9,7 +9,7 @@ then
 
         if test "$1" == 'requirements'
         then
-        	args[0]=--requirements\ 
+        	args[0]=--requirements
 		shift
         fi
 fi
@@ -19,14 +19,14 @@ if test "$#" -gt 0
 then
         if test -n "$1"
         then
-        	args+=--python\ 
+        	args+=--python
         	args+=$1
 		shift
         fi
 fi
 
 echo "Checking for forgotten no_log..."
-! grep -r "no_log: false" .
+grep -r "no_log: false" . && exit 1
 
 echo "yamllint..."
 yamllint -s .
