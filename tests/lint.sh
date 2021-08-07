@@ -1,6 +1,6 @@
 #!/bin/bash -eu
 
-set -eu
+set -e
 
 args=()
 
@@ -26,7 +26,7 @@ then
 fi
 
 echo "Checking for forgotten no_log..."
-grep -r "no_log: false" . && exit 1
+grep -qr "no_log: false\s*$" . && exit 1
 
 echo "yamllint..."
 yamllint -s .
@@ -39,6 +39,5 @@ echo "flake8..."
 flake8 -v
 
 echo "ansible-test sanity..."
-echo "ansible-test sanity ${args[*]}"
 # shellcheck disable=SC2068
 ansible-test sanity ${args[@]}

@@ -31,7 +31,7 @@ jobs:
         - 3.9
         ansible-version:
         - 2.9
-        - 2.10
+        - '2.10'
 
     env:
       PY_COLORS: 1
