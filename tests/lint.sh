@@ -1,10 +1,11 @@
 #!/bin/bash -eu
 
 set -e
+args=""
 
 if test "$1" == 'requirements'
 then
-	args=requirements
+	args="--requirements"
 fi
 
 if test -n "$2"
