@@ -3,7 +3,7 @@
 
 name: CI
 
-on:
+on:  # yamllint disable-line rule:truthy
 
   push:
     branches:
@@ -66,10 +66,8 @@ jobs:
       run: |
         ansible-galaxy collection install mafalb.ansible
 
-    - name: install molecule
-      if: false
-      run: |
-        ansible-playbook -e ansible_python_interpreter=$pythonLocation/bin/python -D ~/.ansible/collections/ansible_collections/mafalb/ansible/playbooks/molecule.yml -t all,debug
+    - name: install shellcheck
+      run: apt install shellcheck
 
     - name: install ansible for python 2.7
       if: ${{ matrix.python-version == '2.7' }}
