@@ -77,7 +77,7 @@ jobs:
     - name: check python version
       run: |
         source ~/.virtualenvs/molecule/bin/activate
-        ansible --version | grep "^python.* ${{ matrix.python-version }}"
+        ansible --version | grep "^\s*python.* ${{ matrix.python-version }}"
 
     - name: ansible-test
       run: |
