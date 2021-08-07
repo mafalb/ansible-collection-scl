@@ -16,7 +16,7 @@ on:  # yamllint disable-line rule:truthy
 
 jobs:
 
-  lint:
+  SANITY:
 
     runs-on: ubuntu-20.04
     strategy:
@@ -84,7 +84,7 @@ jobs:
         python -m venv ~/virtualenv
         . ~/virtualenv/bin/activate
         pip install wheel
-        pip install ansible ansible-lint flake8
+        pip install ansible ansible-lint flake8 pylint
 
     - name: check ansible version
       run: |
@@ -99,7 +99,7 @@ jobs:
     - name: lint
       run: |
         source ~/virtualenv/bin/activate
-        . tests/lint.sh
+        . tests/lint.sh requirements
 
   CI:
 

@@ -16,4 +16,10 @@ echo "flake8..."
 flake8 -v
 
 echo "ansible-test sanity"
-ansible-test sanity
+if test "$1" == 'requirements'
+then
+	ansible-test sanity --requirements
+else
+	ansible-test sanity
+fi
+	
