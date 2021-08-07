@@ -3,7 +3,7 @@
 
 name: CI
 
-on:
+on:  # yamllint disable-line rule:truthy
 
   push:
     branches:
@@ -15,6 +15,107 @@ on:
     - cron: '40 11 * * 6'
 
 jobs:
+
+  lint:
+
+    runs-on: ubuntu-20.04
+    strategy:
+      fail-fast: false
+
+      matrix:
+        python-version:
+        - 2.7
+        - 3.6
+        - 3.7
+        - 3.8
+        - 3.9
+
+    env:
+      PY_COLORS: 1
+      ANSIBLE_FORCE_COLOR: 1
+      ANSIBLE_PYTHON_INTERPRETER: ${{ matrix.python-version }}/bin/python
+
+    defaults:
+      run:
+        working-directory: ansible_collections/mafalb/scl
+
+    steps:
+
+    - name: checkout collection mafalb.scl
+      uses: actions/checkout@v2
+      with:
+        path: ansible_collections/mafalb/scl
+
+    - name: setup python
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: python version
+      run: |
+        python --version
+        which python
+        whereis python
+        python3 --version
+        which python3
+        whereis python3
+        ls -l /opt/hostedtoolcache/Python/
+
+    - name: install mafalb.ansible
+      if: false
+      run: |
+        ansible-galaxy collection install mafalb.ansible
+
+    - name: install shellcheck
+      run: apt install shellcheck
+
+    - name: install ansible for python 2.7
+      if: ${{ matrix.python-version == '2.7' }}
+      run: |
+        pip install virtualenv
+        virtualenv ~/virtualenv
+        . ~/virtualenv/bin/activate
+        pip install wheel
+        pip install 'ansible<2.10'
+
+    - name: install ansible for python 3
+      if: ${{ matrix.python-version != '2.7' }}
+      run: |
+        python -m venv ~/virtualenv
+        . ~/virtualenv/bin/activate
+        pip install ansible
+
+    - name: check ansible version
+      run: |
+        source ~/virtualenv/bin/activate
+        ansible --version
+
+    - name: check python version
+      run: |
+        source ~/virtualenv/bin/activate
+        ansible --version | grep "^\s*python.* ${{ matrix.python-version }}"
+
+    - name: ansible-test
+      run: |
+        source ~/virtualenv/bin/activate
+        ansible-test sanity --requirements --python ${{ matrix.python-version }}
+
+    - name: ansible-lint
+      run: |
+        source ~/virtualenv/bin/activate
+        pip install ansible-lint
+        ansible-lint -v
+        ansible-lint roles/*/vars/*.yml
+
+    - name: flake8
+      run: |
+        source ~/virtualenv/bin/activate
+        pip install flake8
+        flake8 -v --exclude tests/output
+
+    - name: check for forgotten no_log
+      run: |
+        grep -r "no_log: false" . || false
 
   CI:
 
@@ -29,8 +130,10 @@ jobs:
         target:
         - fedora34
         - c8s
+        - alma8
+        - rocky8
         - centos7
-        - ol7
+        - centos8
         - ubuntu20
 
         ansible_version:
@@ -42,27 +145,34 @@ jobs:
 
         - target: fedora34
           image: docker.io/fedora:34
+          privileged: true
 
         - target: c8s
           image: quay.io/centos/centos:stream8
 
+        - target: alma8
+          image: quay.io/almalinux/almalinux:8
+
+        - target: rocky8
+          image: quay.io/rockylinux/rockylinux:8
+
         - target: centos7
           image: quay.io/centos/centos:7
 
-        - target: ol7
-          image: docker.io/oraclelinux:7
+        - target: centos8
+          image: quay.io/centos/centos:8
 
         - target: ubuntu20
           image: docker.io/ubuntu:focal
 
     env:
-      
+
       ANSIBLE_VERSION: ${{ matrix.ansible_version }}
       CI_IMAGE: ${{ matrix.image }}
       CI_HOSTNAME: ci-${{ matrix.target }}
       PY_COLORS: 1
       ANSIBLE_FORCE_COLOR: 1
- 
+
     defaults:
       run:
         working-directory: ansible_collections/mafalb/scl
@@ -74,17 +184,10 @@ jobs:
       with:
         path: ansible_collections/mafalb/scl
 
-    # note: this uses ansible-galaxy from preinstalled ansible (2.10)
-    #
-    - name: install mafalb.ansible
-      run: ansible-galaxy collection install mafalb.ansible
-
-    # note: this uses ansible-playbook from system ansible
-    #
     - name: install molecule
       run: |
-        sudo apt install ansible
-        /usr/bin/ansible-playbook -D ~/.ansible/collections/ansible_collections/mafalb/ansible/playbooks/molecule.yml -e molecule_ansible_version=$ANSIBLE_VERSION -t all,debug
+        ansible-galaxy collection install mafalb.ansible
+        ansible-playbook -e ansible_python_interpreter=python3 -D ~/.ansible/collections/ansible_collections/mafalb/ansible/playbooks/molecule.yml -e molecule_ansible_version=$ANSIBLE_VERSION -t all,debug
 
     - name: check ansible version
       run: |
@@ -95,5 +198,5 @@ jobs:
       run: |
         source ~/.virtualenvs/molecule/bin/activate
         molecule test
-    
+
 ...

@@ -3,7 +3,7 @@
 # This file is part of ansible-collection-scl
 # Copyright (c) 2021 Markus Falb <markus.falb@mafalb.at>
 #
-# ansible-collection-scl is free software: you can redistribute it 
+# ansible-collection-scl is free software: you can redistribute it
 # and/or modify it under the terms of the GNU General Public License as
 # published by the Free Software Foundation, either version 3 of the
 # License, or (at your option) any later version.
@@ -22,7 +22,7 @@
 dependency:
   name: galaxy
   options:
-    role-file: idontexist.yml   # avoid warning while running molecule 
+    role-file: idontexist.yml   # avoid warning while running molecule
     requirements-file: molecule/default/requirements.yml
 
 driver:
@@ -32,16 +32,11 @@ driver:
 
 lint: |
   set -e
-  ! grep -r "no_log: false" .
-  yamllint .
-  ansible-lint -v
-  ansible-lint roles/*/vars/*.yml
-  flake8 -v
-  ansible-test sanity
+  bash tests/lint.sh
 
 platforms:
-- name: ${CI_HOSTNAME-ci-centos7}
-  image: ${CI_IMAGE:-"quay.io/centos/centos:7"}
+- name: ${CI_HOSTNAME-"ci-rocky8"}
+  image: ${CI_IMAGE:-"quay.io/rockylinux/rockylinux:8"}
   command: /lib/systemd/systemd
   network_mode: bridge
   docker_networks:
