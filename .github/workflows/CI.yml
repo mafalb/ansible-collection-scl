@@ -71,17 +71,17 @@ jobs:
       run: |
         ansible-playbook -e ansible_python_interpreter=$pythonLocation/bin/python -D ~/.ansible/collections/ansible_collections/mafalb/ansible/playbooks/molecule.yml -t all,debug
 
-    - name: install ansible for python 3
-      if: ${{ matrix.python-version }} != '2.7'
+    - name: install ansible for python 2.7
+      if: ${{ matrix.python-version == '2.7' }}
       run: |
-        python -m venv ~/virtualenv
+        virtualenv ~/virtualenv
         . ~/virtualenv/bin/activate
         pip install ansible
 
-    - name: install ansible for python 2.7
-      if: ${{ matrix.python-version }} == '2.7'
+    - name: install ansible for python 3
+      if: ${{ matrix.python-version != '2.7' }}
       run: |
-        virtualenv ~/virtualenv
+        python -m venv ~/virtualenv
         . ~/virtualenv/bin/activate
         pip install ansible
 
@@ -112,6 +112,10 @@ jobs:
         source ~/virtualenv/bin/activate
         pip install flake8
         flake8 -v
+
+    - name: check for forgotten no_log
+      run: |
+        ! grep -r "no_log: false" .
 
   CI:
 
