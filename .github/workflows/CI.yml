@@ -16,7 +16,7 @@ on:
 
 jobs:
 
-  ansible-test:
+  lint:
 
     runs-on: ubuntu-20.04
     strategy:
@@ -96,6 +96,7 @@ jobs:
       run: |
         source ~/virtualenv/bin/activate
         ansible-lint -v
+        ansible-lint roles/*/vars/*.yml
 
   CI:
 
