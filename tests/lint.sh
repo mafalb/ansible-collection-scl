@@ -38,7 +38,7 @@ flake8 -v
 echo "ansible-test sanity..."
 if test -n "$args"
 then
-	echo yeah
+	echo "$args"
 	ansible-test sanity "$args"
 else
 	ansible-test sanity
