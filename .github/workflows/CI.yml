@@ -16,19 +16,56 @@ on:  # yamllint disable-line rule:truthy
 
 jobs:
 
-  lint:
+  SANITY:
 
     runs-on: ubuntu-20.04
     strategy:
       fail-fast: false
 
       matrix:
-        python-version:
-        - 2.7
-        - 3.6
-        - 3.7
-        - 3.8
-        - 3.9
+
+        include:
+
+        - ansible_version: '2.9'
+          python-version: 2.7
+
+        - ansible_version: '2.9'
+          python-version: 3.5
+
+        - ansible_version: '2.9'
+          python-version: 3.6
+
+        - ansible_version: '2.9'
+          python-version: 3.7
+
+        - ansible_version: '2.9'
+          python-version: 3.8
+
+
+        - ansible_version: '2.10'
+          python-version: 3.6
+
+        - ansible_version: '2.10'
+          python-version: 3.7
+
+        - ansible_version: '2.10'
+          python-version: 3.8
+
+        - ansible_version: '2.10'
+          python-version: 3.9
+
+
+        - ansible_core_version: '2.11'
+          python-version: 3.6
+
+        - ansible_core_version: '2.11'
+          python-version: 3.7
+
+        - ansible_core_version: '2.11'
+          python-version: 3.8
+
+        - ansible_core_version: '2.11'
+          python-version: 3.9
 
     env:
       PY_COLORS: 1
@@ -61,61 +98,63 @@ jobs:
         whereis python3
         ls -l /opt/hostedtoolcache/Python/
 
-    - name: install mafalb.ansible
-      if: false
-      run: |
-        ansible-galaxy collection install mafalb.ansible
-
     - name: install shellcheck
-      run: apt install shellcheck
+      run: sudo apt install shellcheck
 
-    - name: install ansible for python 2.7
-      if: ${{ matrix.python-version == '2.7' }}
+    - name: install ansible 2.9/2.10 for python 2.7
+      if: ${{ matrix.python-version == '2.7' && matrix.ansible_version }}
       run: |
         pip install virtualenv
         virtualenv ~/virtualenv
         . ~/virtualenv/bin/activate
         pip install wheel
-        pip install 'ansible<2.10'
+        pip install -U pip setuptools
+        pip install "ansible==${{ matrix.ansible_version }}.*" ansible-lint 'flake8<3.9' pylint 'pycodestyle<2.7'
 
-    - name: install ansible for python 3
-      if: ${{ matrix.python-version != '2.7' }}
+    - name: install ansible for python 2.7
+      if: ${{ matrix.python-version == '2.7' && matrix.ansible_core_version }}
+      run: |
+        pip install virtualenv
+        virtualenv ~/virtualenv
+        . ~/virtualenv/bin/activate
+        pip install wheel
+        pip install -U pip setuptools
+        pip install "ansible-core==${{ matrix.ansible_core_version }}.*" ansible ansible-lint 'flake8<3.9' pylint 'pycodestyle<2.7'
+
+    - name: install ansible 2.9/2.10 for python 3
+      if: ${{ matrix.python-version != '2.7' && matrix.ansible_version }}
       run: |
         python -m venv ~/virtualenv
         . ~/virtualenv/bin/activate
-        pip install ansible
+        pip install wheel
+        pip install -U pip setuptools
+        pip install "ansible==${{ matrix.ansible_version }}.*" ansible-lint flake8 pylint 'pycodestyle<2.7'
+
+    - name: install ansible for python 3
+      if: ${{ matrix.python-version != '2.7' && matrix.ansible_core_version }}
+      run: |
+        python -m venv ~/virtualenv
+        . ~/virtualenv/bin/activate
+        pip install wheel
+        pip install -U pip setuptools
+        pip install "ansible-core==${{ matrix.ansible_core_version }}.*" ansible ansible-lint flake8 pylint 'pycodestyle<2.7'
 
     - name: check ansible version
       run: |
         source ~/virtualenv/bin/activate
         ansible --version
+        which ansible-test
+        ansible --version | grep "^ansible.* ${{ matrix.ansible_version }}"
 
     - name: check python version
       run: |
         source ~/virtualenv/bin/activate
         ansible --version | grep "^\s*python.* ${{ matrix.python-version }}"
 
-    - name: ansible-test
+    - name: lint
       run: |
         source ~/virtualenv/bin/activate
-        ansible-test sanity --requirements --python ${{ matrix.python-version }}
-
-    - name: ansible-lint
-      run: |
-        source ~/virtualenv/bin/activate
-        pip install ansible-lint
-        ansible-lint -v
-        ansible-lint roles/*/vars/*.yml
-
-    - name: flake8
-      run: |
-        source ~/virtualenv/bin/activate
-        pip install flake8
-        flake8 -v --exclude tests/output
-
-    - name: check for forgotten no_log
-      run: |
-        grep -r "no_log: false" . || false
+        . tests/lint.sh requirements ${{ matrix.python-version }}
 
   CI:
 
