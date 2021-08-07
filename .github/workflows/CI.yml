@@ -30,7 +30,7 @@ jobs:
         - 3.8
         - 3.9
         ansible_version:
-        - 2.9
+        - '2.9'
         - '2.10'
 
     env:
@@ -75,7 +75,7 @@ jobs:
         . ~/virtualenv/bin/activate
         pip install wheel
         pip install -U pip setuptools
-        pip install "ansible~=${{ matrix.ansible_version }}" ansible-lint 'flake8<3.9' pylint 'pycodestyle<2.7'
+        pip install "ansible==${{ matrix.ansible_version }}.*" ansible-lint 'flake8<3.9' pylint 'pycodestyle<2.7'
 
     - name: install ansible for python 3
       if: ${{ matrix.python-version != '2.7' }}
@@ -84,7 +84,7 @@ jobs:
         . ~/virtualenv/bin/activate
         pip install wheel
         pip install -U pip setuptools
-        pip install "ansible~=${{ matrix.ansible_version }}" ansible-lint flake8 pylint 'pycodestyle<2.7'
+        pip install "ansible~==${{ matrix.ansible_version }}.*" ansible-lint flake8 pylint 'pycodestyle<2.7'
 
     - name: check ansible version
       run: |
