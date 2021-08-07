@@ -79,17 +79,17 @@ jobs:
 
     - name: check ansible version
       run: |
-        source ~/.virtualenvs/virtualenv/bin/activate
+        source ~/virtualenv/bin/activate
         ansible --version
 
     - name: check python version
       run: |
-        source ~/.virtualenvs/virtualenv/bin/activate
+        source ~/virtualenv/bin/activate
         ansible --version | grep "^\s*python.* ${{ matrix.python-version }}"
 
     - name: ansible-test
       run: |
-        source ~/.virtualenvs/virtualenv/bin/activate
+        source ~/virtualenv/bin/activate
         ansible-test sanity --requirements
 
   CI:
