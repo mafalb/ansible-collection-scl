@@ -75,7 +75,7 @@ jobs:
       run: |
         python -m venv ~/virtualenv
         . ~/virtualenv/bin/activate
-        pip install ansible ansible-lint
+        pip install ansible
 
     - name: check ansible version
       run: |
@@ -95,8 +95,15 @@ jobs:
     - name: ansible-lint
       run: |
         source ~/virtualenv/bin/activate
+        pip install ansible-lint
         ansible-lint -v
         ansible-lint roles/*/vars/*.yml
+
+    - name: flake8
+      run: |
+        source ~/virtualenv/bin/activate
+        pip install flake8
+        flake8 -v
 
   CI:
 
