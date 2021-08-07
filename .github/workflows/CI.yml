@@ -67,7 +67,7 @@ jobs:
         ansible-galaxy collection install mafalb.ansible
 
     - name: install shellcheck
-      run: apt install shellcheck
+      run: sudo apt install shellcheck
 
     - name: install ansible for python 2.7
       if: ${{ matrix.python-version == '2.7' }}
