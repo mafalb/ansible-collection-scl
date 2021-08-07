@@ -76,13 +76,14 @@ jobs:
         virtualenv ~/virtualenv
         . ~/virtualenv/bin/activate
         pip install wheel
-        pip install 'ansible<2.10'
+        pip install 'ansible<2.10' ansible-lint flake8 pylint
 
     - name: install ansible for python 3
       if: ${{ matrix.python-version != '2.7' }}
       run: |
         python -m venv ~/virtualenv
         . ~/virtualenv/bin/activate
+        pip install wheel
         pip install ansible ansible-lint flake8
 
     - name: check ansible version
