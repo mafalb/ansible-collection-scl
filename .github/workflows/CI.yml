@@ -123,7 +123,7 @@ jobs:
         pip install "ansible==${{ matrix.ansible_version }}.*" ansible-lint 'flake8<3.9' pylint 'pycodestyle<2.7'
 
     - name: install ansible for python 3
-      if: ${{ matrix.python-version != '2.7' }} and ${{ matrix.ansible_core_version is not defined }}
+      if: ${{ matrix.python-version != '2.7' && matrix.ansible_version }}
       run: |
         python -m venv ~/virtualenv
         . ~/virtualenv/bin/activate
@@ -132,7 +132,7 @@ jobs:
         pip install "ansible==${{ matrix.ansible_version }}.*" ansible-lint flake8 pylint 'pycodestyle<2.7'
 
     - name: install ansible for python 3
-      if: ${{ matrix.python-version != '2.7' }} and ${{ matrix.ansible_core_version is defined }}
+      if: ${{ matrix.python-version != '2.7' && matrix.ansible_core_version }}
       run: |
         python -m venv ~/virtualenv
         . ~/virtualenv/bin/activate
