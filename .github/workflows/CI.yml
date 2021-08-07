@@ -90,7 +90,7 @@ jobs:
     - name: ansible-test
       run: |
         source ~/virtualenv/bin/activate
-        ansible-test sanity --requirements
+        ansible-test sanity --requirements --python ${{ matrix.python-version }}
 
   CI:
 
