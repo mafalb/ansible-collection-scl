@@ -9,21 +9,22 @@ then
 
         if test "$1" == 'requirements'
         then
-        	args[0]="--requirements"
+        	args[0]=--requirements\ 
+		shift
         fi
 fi
 
 
-if test "$#" -gt 1
+if test "$#" -gt 0
 then
-        if test -n "$2"
+        if test -n "$1"
         then
-        	args[1]="--python"
-        	args[2]="$2"
+        	args+=--python\ 
+        	args+=$1
+		shift
         fi
 fi
 
-args=
 echo "Checking for forgotten no_log..."
 ! grep -r "no_log: false" .
 
@@ -38,10 +39,6 @@ echo "flake8..."
 flake8 -v
 
 echo "ansible-test sanity..."
-if test -n "$args"
-then
-	ansible-test sanity "${args[@]}"
-
-else
-	ansible-test sanity
-fi
+echo "ansible-test sanity ${args[*]}"
+# shellcheck disable=SC2068
+ansible-test sanity ${args[@]}
