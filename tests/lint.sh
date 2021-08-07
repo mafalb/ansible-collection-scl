@@ -27,4 +27,9 @@ echo "flake8..."
 flake8 -v
 
 echo "ansible-test sanity"
-ansible-test sanity $args
+if test -n "$args"
+then
+	ansible-test sanity "$args"
+else
+	ansible-test sanity
+fi
