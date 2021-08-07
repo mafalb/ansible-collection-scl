@@ -1,16 +1,25 @@
 #!/bin/bash -eu
 
-set -e
-args=""
+set -eu
 
-if test "$1" == 'requirements'
+args=${args:=''}
+
+if test "$#" -gt 0
 then
-	args="--requirements"
+
+        if test "$1" == 'requirements'
+        then
+        	args="--requirements"
+        fi
 fi
 
-if test -n "$2"
+
+if test "$#" -gt 1
 then
-	args="$args --python $2"
+        if test -n "$2"
+        then
+        	args="$args --python $2"
+        fi
 fi
 
 echo "Checking for forgotten no_log..."
@@ -26,9 +35,10 @@ ansible-lint -v roles/*/vars/*.yml
 echo "flake8..."
 flake8 -v
 
-echo "ansible-test sanity"
+echo "ansible-test sanity..."
 if test -n "$args"
 then
+	echo yeah
 	ansible-test sanity "$args"
 else
 	ansible-test sanity
