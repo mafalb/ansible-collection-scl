@@ -19,8 +19,8 @@ if test "$#" -gt 0
 then
         if test -n "$1"
         then
-        	args+=--python
-        	args+=$1
+        	args+=(--python)
+        	args+=($1)
 		shift
         fi
 fi
